@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Slate is my WIP CSS "framework" -->
-    <link rel="stylesheet" href="https://kwlucas.github.io/Slate/css/core.css" /> 
+    <link rel="stylesheet" href="https://kwlucas.github.io/Slate/css/core.css" />
     <link rel="stylesheet" type="text/css" href="./assets/style.css" />
     <script src="./assets/script.js"></script>
 </head>
@@ -17,72 +17,73 @@
     </header>
     <main class="slate-section">
         <div class="spread-1/4">
-            <form>
-                <label for="citySearch">Search for a city:</label>
+            <form class="container stack">
+                <label id="search-label" for="citySearch">Search for a city:</label>
                 <input id="citySearch" type="search"></input>
-                <button type="submit">Search</button>
+                <button class="info" type="submit">Search</button>
             </form>
-            <hr>
-            <button>City</button>
-            <button>City</button>
-            <button>City</button>
-            <button>City</button>
-            <button>City</button>
-            <button>City</button>
-            <button>City</button>
+            <hr class="nudge-vertical-3">
+            <div class="slate-section set-per-row-1 format-all-elements full-column">
+                <button>City</button>
+                <button>City</button>
+                <button>City</button>
+                <button>City</button>
+                <button>City</button>
+                <button>City</button>
+                <button>City</button>
+                <button>City</button>
+            </div>
         </div>
-        <div>
-            <section>
-                <h2>City - M/DD/YYYY</h2>
-                <div>Temp</div>
-                <div>Wind</div>
-                <div>Humid</div>
-                <div>UV</div>
+        <div class="slate-section set-per-row-1 fill">
+            <section class="block elements-nudge-right">
+                <h2 class="nudge-down">City - M/DD/YYYY</h2><br>
+                <div>Temp</div><br>
+                <div>Wind</div><br>
+                <div>Humid</div><br>
+                <div>UV</div><br>
             </section>
             <section>
                 <h3>5-Day Forecast</h3>
-                <div class="slate-section">
+                <div class="slate-section fill">
                     <div class="block" id="day1">
-                        <h4>M/DD/YYYY</h4>
-                        <i>Image</i>
-                        <div>Temp</div>
-                        <div>Wind</div>
+                        <h4>M/DD/YYYY</h4><br>
+                        <div>Image</div><br>
+                        <div>Temp</div><br>
+                        <div>Wind</div><br>
                         <div>Humid</div>
                     </div>
                     <div class="block" id="day2">
-                        <h4>M/DD/YYYY</h4>
-                        <i>Image</i>
-                        <div>Temp</div>
-                        <div>Wind</div>
+                        <h4>M/DD/YYYY</h4><br>
+                        <div>Image</div><br>
+                        <div>Temp</div><br>
+                        <div>Wind</div><br>
                         <div>Humid</div>
                     </div>
                     <div class="block" id="day3">
-                        <h4>M/DD/YYYY</h4>
-                        <i>Image</i>
-                        <div>Temp</div>
-                        <div>Wind</div>
+                        <h4>M/DD/YYYY</h4><br>
+                        <div>Image</div><br>
+                        <div>Temp</div><br>
+                        <div>Wind</div><br>
                         <div>Humid</div>
                     </div>
                     <div class="block" id="day4">
-                        <h4>M/DD/YYYY</h4>
-                        <i>Image</i>
-                        <div>Temp</div>
-                        <div>Wind</div>
+                        <h4>M/DD/YYYY</h4><br>
+                        <div>Image</div><br>
+                        <div>Temp</div><br>
+                        <div>Wind</div><br>
                         <div>Humid</div>
                     </div>
                     <div class="block" id="day5">
-                        <h4>M/DD/YYYY</h4>
-                        <i>Image</i>
-                        <div>Temp</div>
-                        <div>Wind</div>
+                        <h4>M/DD/YYYY</h4><br>
+                        <div>Image</div><br>
+                        <div>Temp</div><br>
+                        <div>Wind</div><br>
                         <div>Humid</div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
-    <footer>
-    </footer>
 </body>
 
 </html>
