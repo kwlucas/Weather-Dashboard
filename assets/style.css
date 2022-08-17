@@ -1,0 +1,30 @@
+html {
+    overflow-y: unset;
+    font-size: 20px;
+}
+
+.stack {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.stack>*:not(:last-child) {
+    margin-bottom: 0.33rem;
+}
+
+.stack>*:not(:first-child) {
+    margin-top: 0.33rem;
+}
+
+.slate-section.format-all-elements>*:not(:first-child) {
+    margin-top: 0.33rem;
+}
+
+.slate-section.format-all-elements>*:not(:last-child) {
+    margin-bottom: 0.33rem;
+}
+
+#search-label {
+    font-size: 1.5em;
+    font-weight: bold;
+}
