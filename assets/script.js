@@ -21,16 +21,19 @@ function searchCity(query) {
             return response.json();
         }).then(function (data) {
             //console.log(data)
+            let {name:cityName, lat:cityLat, lon:cityLon} = data[0];
+            console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
+            weatherFetch(cityLat, cityLon);
         });
 }
 
 function weatherFetch(lat, lon){
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${apiKey}`)
         .then(function (response) {
-            //console.log(response)
+            console.log(response)
             return response.json();
         }).then(function (data) {
-            //console.log(data)
+            console.log(data)
         });
 }
 //local storage function updates every search. Loads cities onto buttons. Most recent one on the top.
@@ -51,6 +54,7 @@ window.addEventListener('load', function () {
 });
 
 function testHandle(){
+    //searchCity('Boston');
     let {name:cityName, lat:cityLat, lon:cityLon} = testResultGeo[0];
     console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
     weatherFetch(cityLat, cityLon);
