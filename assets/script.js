@@ -18,14 +18,15 @@ function unixTimeConversion(timestamp, isShort) {
 
 
 //PSUDO CODE
-const apiKey = 'e17c20c8e54a5e97f8112c71afd2a764'
+const apiKey = 'f63fccc5cc5fa0e2ad7d2408cb926291';
 
 //On load get latests searches and fill in buttons. Fill page with last search.
 //If there are no or not enough latestes searches fill in with major cities.
 function onPresetClick(event) {
     const city = event.target.value;
     console.log(city);
-    addToHistory(city)//searchCity(city);
+    //addToHistory(city)
+    searchCity(city);
 }
 //On search pass to geocode fetch function
 //take the top result and from geo code and pass it into local storage and the weather fetch.
@@ -113,7 +114,8 @@ window.addEventListener('load', function () {
             addToHistory(recentSearches[i], true)
         }
     }
-    document.querySelector('#city-name').textContent = presets[0];//searchCity(presets[0]);
+    //document.querySelector('#city-name').textContent = presets[0];
+    searchCity(presets[0]);
     for (let i = 0; i < historyBtns.length; i++) {
         const btn = historyBtns[i];
         const content = presets[i];
@@ -121,7 +123,7 @@ window.addEventListener('load', function () {
         btn.setAttribute('value', content);
         btn.addEventListener('click', onPresetClick)
     }
-    testHandle()
+    //testHandle()
 
 });
 
