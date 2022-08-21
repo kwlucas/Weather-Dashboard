@@ -1,3 +1,5 @@
+let presets = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'London', 'Paris', 'Tokyo', 'Delhi']
+
 //https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${apiKeyVar}
 
 //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
@@ -16,7 +18,11 @@ const apiKey = 'e17c20c8e54a5e97f8112c71afd2a764'
 
 //On load get latests searches and fill in buttons. Fill page with last search.
 //If there are no or not enough latestes searches fill in with major cities.
-
+function onPresetClick(event){
+    const city = event.target.value;
+    console.log(city);
+    //searchCity(city);
+}
 //On search pass to geocode fetch function
 //take the top result and from geo code and pass it into local storage and the weather fetch.
 function searchCity(query) {
@@ -47,12 +53,27 @@ function weatherFetch(lat, lon){
 
 
 window.addEventListener('load', function () {
+    const historyBtns = document.querySelectorAll('.historyButton');
     let recentSearches = localStorage.getItem('search-history');
     if(recentSearches){
-        recentSearches[0]
-        for (let i = 1; i < recentSearches.length; i++) {
-            
+        for (let i = recentSearches.length - 1; i >= 0; i--) {
+            let index = presets.indexOf(recentSearches[i])
+            if(index > -1){
+                presets.splice(index, 1);
+            }
+            else {
+                presets.pop();
+            }
+            presets.unshift(recentSearches[i]);
         }
+    }
+    //searchCity(presets[0]);
+    for (let i = 0; i < historyBtns.length; i++) {
+        const btn = historyBtns[i];
+        const content = presets[i];
+        btn.textContent = content;
+        btn.setAttribute('value', content);
+        btn.addEventListener('click', onPresetClick)
     }
     testHandle()
     
