@@ -4,6 +4,10 @@
 
 //Use geo coding to get lat and lon of city then pass the coords into the weather one call to get curent weather and daily forcasts.
 
+function unixTimeConversion(timestamp) {
+    let ms = new Date(timestamp * 1000);
+    return `${ms.getDay()}, ${ms.getMonth()}-${ms.getDate()}-${ms.getFullYear()}`; //day, mm-dd-yyyy
+}
 
 
 //PSUDO CODE
