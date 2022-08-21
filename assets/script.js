@@ -46,10 +46,12 @@ function searchCity(query) {
 function weatherFetch(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${apiKey}`)
         .then(function (response) {
-            console.log(response)
+            //console.log(response)
             return response.json();
         }).then(function (data) {
-            console.log(data)
+            //console.log(data)
+            printCurrent(data['current']);
+            printForecast(data['daily']);
         });
 }
 
@@ -130,12 +132,7 @@ function testHandle() {
     //let { dt: unixTime, temp: temp, wind_speed: wind, humidity: humid, uvi: uvIndex, weather: [{ icon: iconID }] } = testResultsOnecall['current'];
     printCurrent(testResultsOnecall['current']);
     //weatherFetch(cityLat, cityLon);
-    //console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
     printForecast(testResultsOnecall['daily']);
-    // for (let i = 1; i < testResultsOnecall['daily'].length; i++) {
-    //     let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = testResultsOnecall['daily'][i];
-    //     console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
-    // }
 }
 
 const testResultGeo = [
