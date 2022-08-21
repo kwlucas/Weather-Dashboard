@@ -31,3 +31,11 @@ i {
     font-size: 1.5em;
     font-weight: bold;
 }
+
+img{
+    position: absolute;
+}
+
+#main-icon {
+    margin-top: -10px;
+}

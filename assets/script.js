@@ -48,6 +48,18 @@ function weatherFetch(lat, lon) {
             console.log(data)
         });
 }
+
+function printCurrent(currentWeather) {
+    let { dt: unixTime, weather: [{ icon: iconID }] } = currentWeather;
+    document.querySelector('#date').textContent = unixTimeConversion(unixTime);
+    document.querySelector('#main-icon').setAttribute('src', `http://openweathermap.org/img/wn/${iconID}.png`)
+    const items = document.querySelectorAll('.current-weather');
+    items.forEach(element => {
+        const key = element.id.split('-')[1];
+        //console.log(key);
+        element.textContent = currentWeather[key];
+    });
+}
 //local storage function updates every search. Loads cities onto buttons. Most recent one on the top.
 function addToHistory(city, isInitalLoad) {
     let index = presets.indexOf(city);
@@ -62,6 +74,7 @@ function addToHistory(city, isInitalLoad) {
     if(isInitalLoad){
         return;
     }
+    document.querySelector('#city-name').textContent = city;
     const historyBtns = document.querySelectorAll('.historyButton');
     for (let i = 0; i < historyBtns.length; i++) {
         const btn = historyBtns[i];
@@ -83,7 +96,7 @@ window.addEventListener('load', function () {
             addToHistory(recentSearches[i], true)
         }
     }
-    //searchCity(presets[0]);
+    document.querySelector('#city-name').textContent = presets[0];//searchCity(presets[0]);
     for (let i = 0; i < historyBtns.length; i++) {
         const btn = historyBtns[i];
         const content = presets[i];
@@ -99,9 +112,10 @@ function testHandle() {
     //searchCity('Boston');
     let { name: cityName, lat: cityLat, lon: cityLon } = testResultGeo[0];
     console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
-    let { dt: unixTime, temp: temp, wind_speed: wind, humidity: humid, uvi: uvIndex, weather: [{ icon: iconID }] } = testResultsOnecall['current'];
+    //let { dt: unixTime, temp: temp, wind_speed: wind, humidity: humid, uvi: uvIndex, weather: [{ icon: iconID }] } = testResultsOnecall['current'];
+    printCurrent(testResultsOnecall['current']);
     //weatherFetch(cityLat, cityLon);
-    console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
+    //console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
     for (let i = 1; i < testResultsOnecall['daily'].length; i++) {
         let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = testResultsOnecall['daily'][i];
         console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
