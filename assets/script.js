@@ -6,7 +6,8 @@
 
 function unixTimeConversion(timestamp) {
     let ms = new Date(timestamp * 1000);
-    return `${ms.getDay()}, ${ms.getMonth()}-${ms.getDate()}-${ms.getFullYear()}`; //day, mm-dd-yyyy
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    return `${daysOfWeek[ms.getDay()]}, ${ms.getMonth()}-${ms.getDate()}-${ms.getFullYear()}`; //day, mm-dd-yyyy
 }
 
 
@@ -61,8 +62,9 @@ function testHandle(){
     //searchCity('Boston');
     let {name:cityName, lat:cityLat, lon:cityLon} = testResultGeo[0];
     console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
-    let {} = testResultsOnecall;
+    let {dt:unixTime, temp:temp, wind_speed:wind, humidity:humid, uvi:uvIndex, weather:{icon:iconID}} = testResultsOnecall['current'];
     //weatherFetch(cityLat, cityLon);
+    console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}`)
 }
 
 const testResultGeo = [
