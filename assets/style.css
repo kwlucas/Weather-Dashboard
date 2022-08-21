@@ -32,10 +32,11 @@ i {
     font-weight: bold;
 }
 
-img{
-    position: absolute;
+h4 {
+    white-space: pre-line;;
 }
 
-#main-icon {
-    margin-top: -10px;
+img{
+    position: absolute;
+    margin-top: -12px;
 }

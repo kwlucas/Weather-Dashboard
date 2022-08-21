@@ -6,10 +6,14 @@ let presets = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'London', 'Paris
 
 //Use geo coding to get lat and lon of city then pass the coords into the weather one call to get curent weather and daily forcasts.
 
-function unixTimeConversion(timestamp) {
+function unixTimeConversion(timestamp, isShort) {
     let ms = new Date(timestamp * 1000);
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    return `${daysOfWeek[ms.getDay()]}, ${ms.getMonth()}-${ms.getDate()}-${ms.getFullYear()}`; //day, mm-dd-yyyy
+    let daysOfWeek = ['Sunday, ', 'Monday, ', 'Tuesday, ', 'Wednesday, ', 'Thursday, ', 'Friday, ', 'Saturday, '];
+    if(isShort){
+        daysOfWeek = ['Sun.\n', 'Mon.\n', 'Tue.\n', 'Wed.\n', 'Thur.\n', 'Fri.\n', 'Sat.\n'];
+    }
+    //console.log(daysOfWeek);
+    return `${daysOfWeek[ms.getDay()]}${ms.getMonth()+1}-${ms.getDate()}-${ms.getFullYear()}`; //day, mm-dd-yyyy
 }
 
 
@@ -59,6 +63,17 @@ function printCurrent(currentWeather) {
         //console.log(key);
         element.textContent = currentWeather[key];
     });
+}
+
+function printForecast(forecastWeather) {
+    for (let i = 1; i < 6; i++) {
+        let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = forecastWeather[i];
+        document.querySelector(`#day${i}-day`).textContent = unixTimeConversion(unixTime, true);
+        document.querySelector(`#day${i}-icon`).setAttribute('src', `http://openweathermap.org/img/wn/${iconID}.png`);
+        document.querySelector(`#day${i}-temp`).textContent = temp;
+        document.querySelector(`#day${i}-wind`).textContent = wind;
+        document.querySelector(`#day${i}-humid`).textContent = humid;
+    }
 }
 //local storage function updates every search. Loads cities onto buttons. Most recent one on the top.
 function addToHistory(city, isInitalLoad) {
@@ -116,10 +131,11 @@ function testHandle() {
     printCurrent(testResultsOnecall['current']);
     //weatherFetch(cityLat, cityLon);
     //console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
-    for (let i = 1; i < testResultsOnecall['daily'].length; i++) {
-        let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = testResultsOnecall['daily'][i];
-        console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
-    }
+    printForecast(testResultsOnecall['daily']);
+    // for (let i = 1; i < testResultsOnecall['daily'].length; i++) {
+    //     let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = testResultsOnecall['daily'][i];
+    //     console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
+    // }
 }
 
 const testResultGeo = [
