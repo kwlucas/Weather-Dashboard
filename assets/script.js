@@ -62,9 +62,13 @@ function testHandle(){
     //searchCity('Boston');
     let {name:cityName, lat:cityLat, lon:cityLon} = testResultGeo[0];
     console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
-    let {dt:unixTime, temp:temp, wind_speed:wind, humidity:humid, uvi:uvIndex, weather:{icon:iconID}} = testResultsOnecall['current'];
+    let {dt:unixTime, temp:temp, wind_speed:wind, humidity:humid, uvi:uvIndex, weather:[{icon:iconID}]} = testResultsOnecall['current'];
     //weatherFetch(cityLat, cityLon);
-    console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}`)
+    console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
+    for (let i = 1; i < testResultsOnecall['daily'].length; i++) {
+        let {dt:unixTime, temp:{day:temp}, wind_speed:wind, humidity:humid, weather:[{icon:iconID}]} = testResultsOnecall['daily'][i];
+        console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
+    }
 }
 
 const testResultGeo = [
