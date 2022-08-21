@@ -18,10 +18,10 @@ const apiKey = 'e17c20c8e54a5e97f8112c71afd2a764'
 
 //On load get latests searches and fill in buttons. Fill page with last search.
 //If there are no or not enough latestes searches fill in with major cities.
-function onPresetClick(event){
+function onPresetClick(event) {
     const city = event.target.value;
     console.log(city);
-    //searchCity(city);
+    addToHistory(city)//searchCity(city);
 }
 //On search pass to geocode fetch function
 //take the top result and from geo code and pass it into local storage and the weather fetch.
@@ -32,13 +32,14 @@ function searchCity(query) {
             return response.json();
         }).then(function (data) {
             //console.log(data)
-            let {name:cityName, lat:cityLat, lon:cityLon} = data[0];
+            let { name: cityName, lat: cityLat, lon: cityLon } = data[0];
             console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
+            addToHistory(cityName);
             weatherFetch(cityLat, cityLon);
         });
 }
 //https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${apiKey}
-function weatherFetch(lat, lon){
+function weatherFetch(lat, lon) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${apiKey}`)
         .then(function (response) {
             console.log(response)
@@ -48,23 +49,38 @@ function weatherFetch(lat, lon){
         });
 }
 //local storage function updates every search. Loads cities onto buttons. Most recent one on the top.
+function addToHistory(city, isInitalLoad) {
+    let index = presets.indexOf(city);
+    if (index > -1) {
+        presets.splice(index, 1);
+    }
+    else {
+        presets.pop();
+    }
+    presets.unshift(city);
 
+    if(isInitalLoad){
+        return;
+    }
+    const historyBtns = document.querySelectorAll('.historyButton');
+    for (let i = 0; i < historyBtns.length; i++) {
+        const btn = historyBtns[i];
+        const content = presets[i];
+        btn.textContent = content;
+        btn.setAttribute('value', content);
+    }
+    localStorage.setItem('search-history', presets.join());
+}
 //deconstruct weather response and change text content on page.
 
 
 window.addEventListener('load', function () {
     const historyBtns = document.querySelectorAll('.historyButton');
     let recentSearches = localStorage.getItem('search-history');
-    if(recentSearches){
+    if (recentSearches) {
+        recentSearches = recentSearches.split(',')
         for (let i = recentSearches.length - 1; i >= 0; i--) {
-            let index = presets.indexOf(recentSearches[i])
-            if(index > -1){
-                presets.splice(index, 1);
-            }
-            else {
-                presets.pop();
-            }
-            presets.unshift(recentSearches[i]);
+            addToHistory(recentSearches[i], true)
         }
     }
     //searchCity(presets[0]);
@@ -76,18 +92,18 @@ window.addEventListener('load', function () {
         btn.addEventListener('click', onPresetClick)
     }
     testHandle()
-    
+
 });
 
-function testHandle(){
+function testHandle() {
     //searchCity('Boston');
-    let {name:cityName, lat:cityLat, lon:cityLon} = testResultGeo[0];
+    let { name: cityName, lat: cityLat, lon: cityLon } = testResultGeo[0];
     console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
-    let {dt:unixTime, temp:temp, wind_speed:wind, humidity:humid, uvi:uvIndex, weather:[{icon:iconID}]} = testResultsOnecall['current'];
+    let { dt: unixTime, temp: temp, wind_speed: wind, humidity: humid, uvi: uvIndex, weather: [{ icon: iconID }] } = testResultsOnecall['current'];
     //weatherFetch(cityLat, cityLon);
     console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nUV Index: ${uvIndex}\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
     for (let i = 1; i < testResultsOnecall['daily'].length; i++) {
-        let {dt:unixTime, temp:{day:temp}, wind_speed:wind, humidity:humid, weather:[{icon:iconID}]} = testResultsOnecall['daily'][i];
+        let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = testResultsOnecall['daily'][i];
         console.log(`Date: ${unixTimeConversion(unixTime)}\nTemp: ${temp}\u00B0 \nWind Speed: ${wind} MPH\nHumidity: ${humid}%\nIcon: http://openweathermap.org/img/wn/${iconID}@2x.png`);
     }
 }
