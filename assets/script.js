@@ -18,7 +18,7 @@ function unixTimeConversion(timestamp, isShort) {
 
 
 //PSUDO CODE
-const apiKey = 'e17c20c8e54a5e97f8112c71afd2a764';
+const apiKey = '7ae0bf3ccd81cce7de86e274da5f7efd';
 
 //On load get latests searches and fill in buttons. Fill page with last search.
 //If there are no or not enough latestes searches fill in with major cities.
@@ -114,8 +114,8 @@ window.addEventListener('load', function () {
             addToHistory(recentSearches[i], true)
         }
     }
-    document.querySelector('#city-name').textContent = presets[0];
-    //searchCity(presets[0]);
+    //document.querySelector('#city-name').textContent = presets[0];
+    searchCity(presets[0]);
     for (let i = 0; i < historyBtns.length; i++) {
         const btn = historyBtns[i];
         const content = presets[i];
@@ -123,7 +123,7 @@ window.addEventListener('load', function () {
         btn.setAttribute('value', content);
         btn.addEventListener('click', onPresetClick)
     }
-    testHandle()
+    //testHandle()
 
 });
 
