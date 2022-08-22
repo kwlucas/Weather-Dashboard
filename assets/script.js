@@ -1,9 +1,4 @@
 let presets = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'London', 'Paris', 'Tokyo', 'Delhi']
-
-//https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=imperial&appid=${apiKeyVar}
-
-//http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-
 //Use geo coding to get lat and lon of city then pass the coords into the weather one call to get curent weather and daily forcasts.
 
 function unixTimeConversion(timestamp, isShort) {
@@ -17,14 +12,12 @@ function unixTimeConversion(timestamp, isShort) {
 }
 
 
-//PSUDO CODE
 const apiKey = '7ae0bf3ccd81cce7de86e274da5f7efd';
 
 //On load get latests searches and fill in buttons. Fill page with last search.
 //If there are no or not enough latestes searches fill in with major cities.
 function onPresetClick(event) {
     const city = event.target.value;
-    console.log(city);
     //addToHistory(city)
     searchCity(city);
 }
@@ -33,10 +26,10 @@ function onPresetClick(event) {
 function searchCity(query) {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${apiKey}`)
         .then(function (response) {
-            //console.log(response)
+            console.log(response)
             return response.json();
         }).then(function (data) {
-            //console.log(data)
+            console.log(data)
             let { name: cityName, lat: cityLat, lon: cityLon } = data[0];
             console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
             addToHistory(cityName);
@@ -106,16 +99,29 @@ function addToHistory(city, isInitalLoad) {
 
 
 window.addEventListener('load', function () {
+    const formEl = document.querySelector('#search-form');
     const historyBtns = document.querySelectorAll('.historyButton');
     let recentSearches = localStorage.getItem('search-history');
+
+    formEl.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let query = document.querySelector('#city-search').value.trim();
+        if(query){
+            searchCity(query);
+        }
+        else {
+            console.log(`"${query}" is not a valid search term!`)
+        }
+    });
+    
     if (recentSearches) {
         recentSearches = recentSearches.split(',')
         for (let i = recentSearches.length - 1; i >= 0; i--) {
             addToHistory(recentSearches[i], true)
         }
     }
-    //document.querySelector('#city-name').textContent = presets[0];
-    searchCity(presets[0]);
+    document.querySelector('#city-name').textContent = presets[0];
+    //searchCity(presets[0]);
     for (let i = 0; i < historyBtns.length; i++) {
         const btn = historyBtns[i];
         const content = presets[i];

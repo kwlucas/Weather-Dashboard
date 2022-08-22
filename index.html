@@ -17,9 +17,9 @@
     </header>
     <main class="slate-section">
         <div class="spread-1/4">
-            <form class="container stack">
+            <form class="container stack" id="search-form">
                 <label id="search-label" for="city-search">Search for a city:</label>
-                <input id="city-search" type="search"></input>
+                <input id="city-search" name="city-q" type="search" autocomplete="off" pattern="[^\d]+" title="Search cannot contain digits." required></input>
                 <button class="info" type="submit">Search</button>
             </form>
             <hr class="nudge-vertical-3">
