@@ -20,6 +20,8 @@ function onPresetClick(event) {
 
 //On search pass to geocode fetch function
 //take the top result and from geo code and pass it into local storage and the weather fetch.
+const apiKey = '7ae0bf3ccd81cce7de86e274da5f7efd';
+
 function searchCity(query) {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${apiKey}`)
         .then(function (response) {
