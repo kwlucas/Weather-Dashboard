@@ -26,10 +26,14 @@ function onPresetClick(event) {
 function searchCity(query) {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${apiKey}`)
         .then(function (response) {
-            console.log(response)
+            //console.log(response)
             return response.json();
         }).then(function (data) {
-            console.log(data)
+            
+            if(!data[0]){
+                alert(`No results found for "${query}".`);
+                return;
+            }
             let { name: cityName, lat: cityLat, lon: cityLon } = data[0];
             console.log(`city: ${cityName}\nCords: ${cityLat}, ${cityLon}`);
             addToHistory(cityName);
@@ -108,6 +112,7 @@ window.addEventListener('load', function () {
         let query = document.querySelector('#city-search').value.trim();
         if(query){
             searchCity(query);
+            formEl.reset();
         }
         else {
             console.log(`"${query}" is not a valid search term!`)
