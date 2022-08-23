@@ -70,6 +70,20 @@ function printCurrent(currentWeather) {
         const key = element.id.split('-')[1];
         element.textContent = currentWeather[key];
     });
+    const uvIndexEl = document.querySelector('#main-uvi');
+    const uvi = Number(currentWeather['uvi']);
+    //clear color classes from uv index element
+    uvIndexEl.classList.remove('success', 'caution', 'danger');
+    //add a class to put a color around the UV index element depending on how hight the UV index is
+    if(uvi <= 2){
+        uvIndexEl.classList.add('success');
+    }
+    else if(uvi <= 5){
+        uvIndexEl.classList.add('caution');
+    }
+    else {
+        uvIndexEl.classList.add('danger');
+    }
 }
 
 function printForecast(forecastWeather) {
