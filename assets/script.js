@@ -26,7 +26,7 @@ const apiKey = '7ae0bf3ccd81cce7de86e274da5f7efd';
 
 function searchCity(query) {
     //get the first result for searching for a city
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${apiKey}`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=1&appid=${apiKey}`)
         .then(function (response) {
             //console.log(response)
             return response.json();
@@ -62,7 +62,7 @@ function printCurrent(currentWeather) {
     let { dt: unixTime, weather: [{ icon: iconID }] } = currentWeather;
     //set the text content and image source of the date and icon html elements respectively
     document.querySelector('#date').textContent = unixTimeConversion(unixTime);
-    document.querySelector('#main-icon').setAttribute('src', `http://openweathermap.org/img/wn/${iconID}.png`)
+    document.querySelector('#main-icon').setAttribute('src', `https://openweathermap.org/img/wn/${iconID}.png`)
 
     const items = document.querySelectorAll('.current-weather');
     //for each element with the current-weather class take the second part of their id and use it to get data
@@ -91,7 +91,7 @@ function printForecast(forecastWeather) {
         //for each of the next five days get weather data and set the html elements
         let { dt: unixTime, temp: { day: temp }, wind_speed: wind, humidity: humid, weather: [{ icon: iconID }] } = forecastWeather[i];
         document.querySelector(`#day${i}-day`).textContent = unixTimeConversion(unixTime, true);
-        document.querySelector(`#day${i}-icon`).setAttribute('src', `http://openweathermap.org/img/wn/${iconID}.png`);
+        document.querySelector(`#day${i}-icon`).setAttribute('src', `https://openweathermap.org/img/wn/${iconID}.png`);
         document.querySelector(`#day${i}-temp`).textContent = temp;
         document.querySelector(`#day${i}-wind`).textContent = wind;
         document.querySelector(`#day${i}-humid`).textContent = humid;
