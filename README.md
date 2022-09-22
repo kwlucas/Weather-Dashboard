@@ -1,10 +1,10 @@
 # Weather Dashboard
 [Deployed Application](https://kwlucas.github.io/Weather-Dashboard/)
+> Note: Due to the application relying on a free API plan from [Open Weather](https://openweathermap.org/) to get data there is a chance that service could be discontinued for various reasons and the application will cease to function.
 
 ## Purpose
 
 This web application provides the current and forecast weather for cities.
-> Note: Due to the application relying on a free API plan from [Open Weather](https://openweathermap.org/) to get data there is a chance that service could be discontinued for various reasons and the application will cease to function.
 
 ## Functionality
 
